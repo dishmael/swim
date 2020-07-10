@@ -1,0 +1,22 @@
+{
+    "todohighlight.keywords": [
+        {
+            "text": "FIXME:",
+            "color": "red",
+            //"border": "1px solid blue",
+            "borderRadius": "2px", //NOTE: using borderRadius along with `border` or you will see nothing change
+            "backgroundColor": "rgba(0,0,0,.2)",
+            "isWholeLine": "true",
+            //other styling properties goes here ... 
+        },
+        {
+            "text": "TODO:",
+            "color": "yellow",
+            //"border": "1px solid blue",
+            "borderRadius": "2px", //NOTE: using borderRadius along with `border` or you will see nothing change
+            "backgroundColor": "rgba(0,0,0,.2)",
+            "isWholeLine": "true",
+            //other styling properties goes here ... 
+        },
+    ]
+}

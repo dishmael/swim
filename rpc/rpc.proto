@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package swim;
+
+message Node {
+    string Address = 1;
+    uint32 Port = 2;
+    int64 LastSeen = 4;
+}
+
+message JoinMessageInput {
+    int64 Timestamp = 1;
+    string Address = 2;
+    uint32 Port = 3;
+}
+
+message JoinMessageOutput {
+    int64 Timestamp = 1;
+    repeated Node Nodes = 2;
+    bool Success = 3;
+}
+
+message LeaveMessageInput {
+    int64 Timestamp = 1;
+    string Address = 2;
+}
+
+message LeaveMessageOutput {
+    int64 Timestamp = 1;
+    bool Success = 2;
+}
+
+message PingMessageInput {
+    int64 Timestamp = 1;
+    Node Source = 2;
+    repeated Node Joins = 3;
+    repeated Node Leaves = 4;
+}
+
+message PingRequestMessageInput {
+    int64 Timestamp = 1;
+    Node Source = 2;
+    Node RemoteNode = 3;
+}
+
+message PingMessageOutput {
+    int64 Timestamp = 1;
+    bool Success = 2;
+}
+
+service Swim {
+    rpc Join(JoinMessageInput) returns (JoinMessageOutput) {};
+    rpc Leave(LeaveMessageInput) returns (LeaveMessageOutput) {};
+    rpc Ping(PingMessageInput) returns (PingMessageOutput) {};
+    rpc PingRequest(PingRequestMessageInput) returns (PingMessageOutput) {};
+}
