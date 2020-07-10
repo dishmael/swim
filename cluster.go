@@ -139,7 +139,6 @@ func (c *cluster) Start() {
 			if n.Address != c.self.Address {
 				logger.Debug().Msgf("joinChan -> %+v", n)
 				c.Lock()
-				n.LastSeen = time.Now().UnixNano()
 				c.members.AddNode(n)
 				c.joins = append(c.joins, n)
 				c.Unlock()
@@ -157,7 +156,6 @@ func (c *cluster) Start() {
 		case n := <-nodePingChan:
 			if n.Address != c.self.Address {
 				c.Lock()
-				n.LastSeen = time.Now().UnixNano()
 				c.members.AddNode(n)
 				c.Unlock()
 			}
