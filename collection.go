@@ -36,6 +36,7 @@ func NewCollection() Collection {
 
 // AddNode adds a Node to the collection using address as the key
 func (c *collection) AddNode(n *rpc.Node) {
+	n.LastSeen = time.Now().UnixNano()
 	c.members[n.Address] = n
 }
 
