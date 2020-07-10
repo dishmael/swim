@@ -95,7 +95,7 @@ func (c *collection) GetRandomNodes(size int) []*rpc.Node {
 		return nodes
 	}
 
-	return nodes[:size]
+	return nodes[:size-1]
 }
 
 // GetSampleSize returns the ideal sample size from the collection (finite population)
