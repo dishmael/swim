@@ -10,8 +10,7 @@ message Node {
 
 message JoinMessageInput {
     int64 Timestamp = 1;
-    string Address = 2;
-    uint32 Port = 3;
+    Node Node = 2;
 }
 
 message JoinMessageOutput {
@@ -22,7 +21,7 @@ message JoinMessageOutput {
 
 message LeaveMessageInput {
     int64 Timestamp = 1;
-    string Address = 2;
+    Node Node = 2;
 }
 
 message LeaveMessageOutput {

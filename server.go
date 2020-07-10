@@ -62,6 +62,8 @@ func (s *server) Stop() {
 
 // Join ...
 func (s *server) Join(ctx context.Context, in *rpc.JoinMessageInput) (*rpc.JoinMessageOutput, error) {
+	nodeJoinChan <- in.GetNode()
+
 	return &rpc.JoinMessageOutput{
 		Timestamp: time.Now().UnixNano(),
 		Success:   true,
@@ -70,6 +72,8 @@ func (s *server) Join(ctx context.Context, in *rpc.JoinMessageInput) (*rpc.JoinM
 
 // Leave removes a Node from the collection
 func (s *server) Leave(ctx context.Context, in *rpc.LeaveMessageInput) (*rpc.LeaveMessageOutput, error) {
+	nodeLeaveChan <- in.GetNode()
+
 	return &rpc.LeaveMessageOutput{
 		Timestamp: time.Now().UnixNano(),
 		Success:   true,
@@ -78,6 +82,21 @@ func (s *server) Leave(ctx context.Context, in *rpc.LeaveMessageInput) (*rpc.Lea
 
 // Ping ...
 func (s *server) Ping(ctx context.Context, in *rpc.PingMessageInput) (*rpc.PingMessageOutput, error) {
+	// Add the source
+	nodePingChan <- in.Source
+
+	// Add joins
+	joins := in.GetJoins()
+	for _, j := range joins {
+		nodeJoinChan <- j
+	}
+
+	// Remove departures
+	departures := in.GetLeaves()
+	for _, d := range departures {
+		nodeLeaveChan <- d
+	}
+
 	return &rpc.PingMessageOutput{
 		Timestamp: time.Now().UnixNano(),
 		Success:   true,
